@@ -15,6 +15,7 @@
     {
         _ivar = aIvar;
         _ivName = [NSString stringWithUTF8String:ivar_getName(aIvar)];
+        if ([_ivName isEqualToString:@"isa"]) return Nil;
 
         if ([_ivName hasPrefix:@"_"]) {
             _propertyName = [_ivName stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@""];
