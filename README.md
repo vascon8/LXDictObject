@@ -1,5 +1,5 @@
 LXDictObject
 ============
-Model/Object -> Dictionary
+Model/Object -> Dictionary : - (NSDictionary *)keyedDictFromModel;
 
-Dictionary -> Model/Object
+Dictionary -> Model/Object : + (instancetype)objectWithKeyedDict:(NSDictionary *)keyedDict;
