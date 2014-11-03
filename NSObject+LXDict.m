@@ -59,24 +59,24 @@ typedef void(^LXIvarBlock)(LXIvar *aIvar,BOOL *stop);
         
         if (aIvar.userDefinedType && [value isKindOfClass:[NSDictionary class]]) {
             Class userDefinedClass = NSClassFromString(aIvar.userDefinedType);
-            value = [userDefinedClass objectWithKeyedDict:value];
+            value = [userDefinedClass objectWithKeyedDict:value modelDict:modelDict];
         }
         
         NSString *modelName = modelDict[aIvar.propertyName];
-        if (modelName && aIvar.isArray && [value isKindOfClass:[NSArray class]]) {
-            value = [self modelObjectsWithModelName:modelName value:value];
+        if (modelName && value && aIvar.isArray && [value isKindOfClass:[NSArray class]]) {
+            value = [self modelObjectsWithModelName:modelName modelDict:modelDict value:value];
         }
         
         if (value) [self setValue:value forKey:aIvar.propertyName];
     }];
 }
-- (NSArray *)modelObjectsWithModelName:(NSString *)modelName value:(NSArray *)value
+- (NSArray *)modelObjectsWithModelName:(NSString *)modelName modelDict:(NSDictionary*)modelDict value:(NSArray *)value
 {
     Class modelClass = NSClassFromString(modelName);
     NSMutableArray *arr = [NSMutableArray arrayWithCapacity:[value count]];
     for (id obj in value) {
         if ([obj isKindOfClass:[NSDictionary class]]) {
-            id model = [modelClass objectWithKeyedDict:obj];
+            id model = [modelClass objectWithKeyedDict:obj modelDict:modelDict];
             if (!model) continue;
             [arr addObject:model];
         }
