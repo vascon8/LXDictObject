@@ -41,3 +41,9 @@
 }
 
 @end
+
+
+@implementation LXDictModel
+
+
+@end

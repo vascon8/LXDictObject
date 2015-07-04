@@ -40,7 +40,15 @@ typedef void(^LXIvarBlock)(LXIvar *aIvar,BOOL *stop);
         if (aIvar.isArray && [value isKindOfClass:[NSArray class]]) {
             NSMutableArray *arr = [NSMutableArray arrayWithCapacity:[value count]];
             for (id obj in value) {
-                NSDictionary *dict = [obj keyedDictFromModel];
+                NSDictionary *dict = nil;
+                if ([obj isKindOfClass:[NSArray class]]) {
+                    LXDictModel *model = [LXDictModel new];
+                    model.lxArray = obj;
+                    dict = [model keyedDictFromModel];
+                }
+                else{
+                    dict = [obj keyedDictFromModel];
+                }
                 if(dict) [arr addObject:dict];
             }
             value = arr;

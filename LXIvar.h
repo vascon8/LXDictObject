@@ -19,3 +19,8 @@
 - (instancetype)initWithaIvar:(Ivar)aIvar;
 
 @end
+
+
+@interface LXDictModel : NSObject
+@property NSArray *lxArray;
+@end
